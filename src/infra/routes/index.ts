@@ -1,8 +1,8 @@
+import { SubscribeUserControllerFactory } from '@infra/factories/controllers/SubscribeUserControllerFactory';
 import { Router } from 'express';
-import SubscribeUserController from '../../useCases/SubscribeUser/SubscribeUserController';
 
 const routes = Router();
-const subscribeUserController = new SubscribeUserController();
+const subscribeUserController = SubscribeUserControllerFactory();
 
 routes.post('/subscribe', subscribeUserController.execute);
 

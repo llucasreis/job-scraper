@@ -1,25 +1,40 @@
 import { CrawlerProviderFactory } from '@infra/factories/providers/CrawlerProviderFactory';
-import { inject, injectable } from 'tsyringe';
+import CrawlerProvider from '@infra/providers/Crawler/ICrawlerProvider';
+import MailProvider from '@infra/providers/Mail/IMailProvider';
 import { UserDocument } from '../../infra/mongoose/models/User';
 import IUsersRepository from '../../infra/repositories/IUsersRepository';
 import { SubscribeUserRequestDTO } from './SubscribeUserDTO';
 
-@injectable()
 export default class SubscribeUserUseCase {
+  crawlerProvider: CrawlerProvider;
+
   constructor(
-    @inject('UsersRepository') private usersRepository: IUsersRepository,
+    private usersRepository: IUsersRepository,
+    private mailProvider: MailProvider,
   ) {}
 
   public async execute(data: SubscribeUserRequestDTO): Promise<UserDocument> {
     const newUser = await this.usersRepository.subscribe(data);
+    const { email, platform, name } = data;
 
-    const { platform } = data;
+    this.crawlerProvider = CrawlerProviderFactory(platform);
 
-    // chama o crawler e printa alguma informação
-
-    const jobs = await CrawlerProviderFactory(platform).searchJobs();
+    const jobs = await this.crawlerProvider.searchJobs();
 
     console.log(jobs);
+
+    await this.mailProvider.sendMail({
+      from: {
+        email: 'jobssearch@email.com',
+        name: 'Job Seacher',
+      },
+      to: {
+        email,
+        name,
+      },
+      subject: 'Email with Jobs',
+      body: JSON.stringify(jobs),
+    });
 
     return newUser;
   }

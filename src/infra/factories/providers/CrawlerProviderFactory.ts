@@ -2,9 +2,10 @@ import PuppeteerGupyProvider from '@infra/providers/Crawler/implementations/Pupp
 import PuppeteerKenobyProvider from '@infra/providers/Crawler/implementations/PuppeteerKenobyProvider';
 
 export function CrawlerProviderFactory(platform: 'kenoby' | 'gupy') {
-  if (platform === 'kenoby') {
-    return new PuppeteerKenobyProvider();
-  }
+  const providers = {
+    kenoby: new PuppeteerKenobyProvider(),
+    gupy: new PuppeteerGupyProvider(),
+  };
 
-  return new PuppeteerGupyProvider();
+  return providers[platform];
 }
