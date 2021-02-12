@@ -1,5 +1,5 @@
 import IUsersRepository from '../../repositories/IUsersRepository';
-import { SubscribeUserRequestDTO } from '../../../useCases/SubscribeUser/SubscribeUserDTO';
+import { SubscribeUserRequestDTO } from '../../useCases/SubscribeUser/SubscribeUserDTO';
 import User, { UserDocument, UserModel } from '../models/User';
 
 export default class UserMongooseRepository implements IUsersRepository {

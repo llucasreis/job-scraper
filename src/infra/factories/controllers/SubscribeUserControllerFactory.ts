@@ -1,7 +1,7 @@
-import UserMongooseRepository from '@infra/mongoose/repositories/UserMongooseRepository';
+import UserMongooseRepository from 'modules/subscriptions/mongoose/repositories/UserMongooseRepository';
 import MailProvider from '@infra/providers/Mail/IMailProvider';
-import SubscribeUserController from '@useCases/SubscribeUser/SubscribeUserController';
-import SubscribeUserUseCase from '@useCases/SubscribeUser/SubscribeUserUseCase';
+import SubscribeUserController from 'modules/subscriptions/useCases/SubscribeUser/SubscribeUserController';
+import SubscribeUserUseCase from 'modules/subscriptions/useCases/SubscribeUser/SubscribeUserUseCase';
 import { MailProviderFactory } from '../providers/MailProviderFactory';
 
 export function SubscribeUserControllerFactory() {

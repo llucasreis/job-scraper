@@ -1,8 +1,8 @@
 import { CrawlerProviderFactory } from '@infra/factories/providers/CrawlerProviderFactory';
 import CrawlerProvider from '@infra/providers/Crawler/ICrawlerProvider';
 import MailProvider from '@infra/providers/Mail/IMailProvider';
-import { UserDocument } from '../../infra/mongoose/models/User';
-import IUsersRepository from '../../infra/repositories/IUsersRepository';
+import { UserDocument } from '../../mongoose/models/User';
+import IUsersRepository from '../../repositories/IUsersRepository';
 import { SubscribeUserRequestDTO } from './SubscribeUserDTO';
 
 export default class SubscribeUserUseCase {
