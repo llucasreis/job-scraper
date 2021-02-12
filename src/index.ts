@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import 'dotenv/config';
-import './container';
 import mongoose from 'mongoose';
 import app from './infra/http/app';
 
