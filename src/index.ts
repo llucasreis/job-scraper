@@ -12,13 +12,13 @@ const run = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
+
+    app.listen(port, () => {
+      console.log(`Listening on port: ${port}`);
+    });
   } catch (err) {
     console.error(err);
   }
-
-  app.listen(port, () => {
-    console.log(`Listening on port: ${port}`);
-  });
 };
 
 run();
