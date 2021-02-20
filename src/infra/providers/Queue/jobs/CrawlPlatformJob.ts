@@ -3,6 +3,7 @@ import { MailProviderFactory } from '@infra/factories/providers/MailProviderFact
 import { Job } from 'bull';
 import { SubscribeUserRequestDTO } from 'modules/subscriptions/useCases/SubscribeUser/SubscribeUserDTO';
 import mailConfig from '@config/mail';
+import ProcessJobHelper from 'shared/helpers/ProcessJobHelper';
 
 export interface CrawlPlatformData {
   platform: 'kenoby' | 'gupy';
@@ -23,6 +24,8 @@ export default {
 
     const jobs = await crawlerProvider.searchJobs();
 
+    const jobsProcessed = ProcessJobHelper.structureByCityAndDepartment(jobs);
+
     console.log('Jobs processed');
 
     const mailProvider = MailProviderFactory();
@@ -34,7 +37,7 @@ export default {
         name,
       },
       subject: 'Email with Jobs',
-      body: JSON.stringify(jobs),
+      body: JSON.stringify(jobsProcessed),
     });
 
     console.log('Email sended');
