@@ -1,39 +1,21 @@
-import { CrawlerProviderFactory } from '@infra/factories/providers/CrawlerProviderFactory';
-import CrawlerProvider from '@infra/providers/Crawler/ICrawlerProvider';
-import MailProvider from '@infra/providers/Mail/IMailProvider';
+import { CrawlPlatformJob } from '@infra/providers/Queue/jobs';
+import QueueProvider from '@infra/providers/Queue/contracts/QueueProvider';
 import { UserDocument } from '../../mongoose/models/User';
 import IUsersRepository from '../../repositories/IUsersRepository';
 import { SubscribeUserRequestDTO } from './SubscribeUserDTO';
 
 export default class SubscribeUserUseCase {
-  crawlerProvider: CrawlerProvider;
-
   constructor(
     private usersRepository: IUsersRepository,
-    private mailProvider: MailProvider,
+    private queueProvider: QueueProvider,
   ) {}
 
   public async execute(data: SubscribeUserRequestDTO): Promise<UserDocument> {
     const newUser = await this.usersRepository.subscribe(data);
-    const { email, platform, name } = data;
 
-    this.crawlerProvider = CrawlerProviderFactory(platform);
-
-    const jobs = await this.crawlerProvider.searchJobs();
-
-    console.log(jobs);
-
-    await this.mailProvider.sendMail({
-      from: {
-        email: 'jobssearch@email.com',
-        name: 'Job Seacher',
-      },
-      to: {
-        email,
-        name,
-      },
-      subject: 'Email with Jobs',
-      body: JSON.stringify(jobs),
+    await this.queueProvider.addJob({
+      name: CrawlPlatformJob.key,
+      data,
     });
 
     return newUser;

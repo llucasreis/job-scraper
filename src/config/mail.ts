@@ -8,6 +8,13 @@ export interface MailConfig {
     user: string;
     pass: string;
   };
+
+  defaults: {
+    from: {
+      email: string;
+      name: string;
+    };
+  };
 }
 
 export default {
@@ -19,5 +26,12 @@ export default {
   auth: {
     user: process.env.MAIL_AUTH_USER,
     pass: process.env.MAIL_AUTH_PASS,
+  },
+
+  defaults: {
+    from: {
+      email: process.env.MAIL_DEFAULT_ADDRESS || 'no-reply@jobsearch.com',
+      name: process.env.MAIL_DEFAULT_NAME || 'JobSearch',
+    },
   },
 } as MailConfig;

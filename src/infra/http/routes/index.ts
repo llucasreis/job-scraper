@@ -4,6 +4,9 @@ import { Router } from 'express';
 const routes = Router();
 const subscribeUserController = SubscribeUserControllerFactory();
 
-routes.post('/subscribe', subscribeUserController.execute);
+routes.post(
+  '/subscribe',
+  subscribeUserController.execute.bind(subscribeUserController),
+);
 
 export default routes;

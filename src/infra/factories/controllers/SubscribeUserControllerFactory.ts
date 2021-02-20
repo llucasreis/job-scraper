@@ -1,19 +1,19 @@
 import UserMongooseRepository from 'modules/subscriptions/mongoose/repositories/UserMongooseRepository';
-import MailProvider from '@infra/providers/Mail/IMailProvider';
 import SubscribeUserController from 'modules/subscriptions/useCases/SubscribeUser/SubscribeUserController';
 import SubscribeUserUseCase from 'modules/subscriptions/useCases/SubscribeUser/SubscribeUserUseCase';
-import { MailProviderFactory } from '../providers/MailProviderFactory';
+import QueueProvider from '@infra/providers/Queue/contracts/QueueProvider';
+import { QueueProviderFactory } from '../providers/QueueProviderFactory';
 
 export function SubscribeUserControllerFactory() {
   const userMongooseRepository = new UserMongooseRepository();
-  const mailProvider: MailProvider = MailProviderFactory();
+  const queueProvider: QueueProvider = QueueProviderFactory();
   const subscribeUserUseCase = new SubscribeUserUseCase(
     userMongooseRepository,
-    mailProvider,
+    queueProvider,
   );
-  const subscriberUserController = new SubscribeUserController(
+  const subscribeUserController = new SubscribeUserController(
     subscribeUserUseCase,
   );
 
-  return subscriberUserController;
+  return subscribeUserController;
 }
