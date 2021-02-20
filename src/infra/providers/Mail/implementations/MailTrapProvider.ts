@@ -1,6 +1,6 @@
 import mailConfig from '@config/mail';
 import nodemailer, { Transporter } from 'nodemailer';
-import MailProvider, { SendEmailDTO } from '../IMailProvider';
+import MailProvider, { SendEmailDTO } from '../contracts/MailProvider';
 
 export default class MailTrapProvider implements MailProvider {
   private transporter: Transporter;

@@ -1,8 +1,8 @@
-import IUsersRepository from '../../repositories/IUsersRepository';
+import UsersRepository from '../../contracts/UsersRepository';
 import { SubscribeUserRequestDTO } from '../../useCases/SubscribeUser/SubscribeUserDTO';
 import User, { UserDocument, UserModel } from '../models/User';
 
-export default class UserMongooseRepository implements IUsersRepository {
+export default class UserMongooseRepository implements UsersRepository {
   mongooseRepository: UserModel;
 
   constructor() {

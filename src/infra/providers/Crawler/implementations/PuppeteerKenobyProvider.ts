@@ -1,6 +1,6 @@
 import puppeteer from '@config/puppeteer';
 import JobInfoDTO from '../dtos/JobInfoDTO';
-import CrawlerProvider from '../ICrawlerProvider';
+import CrawlerProvider from '../contracts/CrawlerProvider';
 
 export default class PuppeteerKenobyProvider implements CrawlerProvider {
   async searchJobs(): Promise<JobInfoDTO[]> {
