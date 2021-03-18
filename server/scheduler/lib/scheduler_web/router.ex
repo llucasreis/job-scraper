@@ -7,6 +7,8 @@ defmodule SchedulerWeb.Router do
 
   scope "/api", SchedulerWeb do
     pipe_through :api
+
+    post "/tasks/create", TasksController, :create
   end
 
   # Enables LiveDashboard only for development
